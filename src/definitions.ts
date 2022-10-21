@@ -13,6 +13,7 @@ export interface VideoRecorderPlugin {
 	stopRecording(): Promise<{ videoUrl: string }>;
 	getDuration(): Promise<{ value: number }>;
 	addListener(eventName: 'onVolumeInput', listenerFunc: (event: {value: number}) => void): PluginListenerHandle;
+    hideBackground(): Promise<void>;
 }
 
 export interface VideoRecorderPreviewFrame {

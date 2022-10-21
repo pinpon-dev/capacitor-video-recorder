@@ -185,6 +185,10 @@ export class VideoRecorderWeb extends WebPlugin implements VideoRecorderPlugin {
 	getDuration(): Promise<{ value: number }> {
 		return Promise.resolve({ value: 0 });
 	}
+    async hideBackground(): Promise<void> {
+       
+    }
+        
 	addListener(): any {
 		console.warn('VideoRecorder: No web mock available for addListener');
 	}

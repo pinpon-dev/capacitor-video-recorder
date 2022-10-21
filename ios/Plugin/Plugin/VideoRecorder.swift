@@ -51,6 +51,30 @@ public class CAPVideoRecorderPlugin: CAPPlugin, AVCaptureFileOutputRecordingDele
         let averagePower: Float = (self.audioRecorder?.averagePower(forChannel: 1))!
         self.notifyListeners("onVolumeInput", data: ["value":averagePower])
     }
+    
+    private func hideBackground() {
+           DispatchQueue.main.async {
+               self.bridge?.webView!.isOpaque = false
+               self.bridge?.webView!.backgroundColor = UIColor.clear
+               self.bridge?.webView!.scrollView.backgroundColor = UIColor.clear
+
+               let javascript = "document.documentElement.style.backgroundColor = 'transparent'; document.body.style.backgroundColor = 'transparent'"
+
+               self.bridge?.webView!.evaluateJavaScript(javascript)
+           }
+       }
+
+       private func showBackground() {
+           DispatchQueue.main.async {
+               let javascript = "document.documentElement.style.backgroundColor = ''; document.body.style.backgroundColor = ''"
+
+               self.bridge?.webView!.evaluateJavaScript(javascript) { (result, error) in
+                   self.bridge?.webView!.isOpaque = true
+                   self.bridge?.webView!.backgroundColor = UIColor.white
+                   self.bridge?.webView!.scrollView.backgroundColor = UIColor.white
+               }
+           }
+       }
 
 
 	/**
@@ -58,6 +82,7 @@ public class CAPVideoRecorderPlugin: CAPPlugin, AVCaptureFileOutputRecordingDele
 	* { camera: Int, quality: Int }
 	*/
     @objc func initialize(_ call: CAPPluginCall) {
+    
         if (self.captureSession?.isRunning != true) {
             self.currentCamera = call.getInt("camera", 0)
             self.quality = call.getInt("quality", 0)
@@ -72,9 +97,10 @@ public class CAPVideoRecorderPlugin: CAPPlugin, AVCaptureFileOutputRecordingDele
                 DispatchQueue.main.async {
                     do {
                         // Set webview to transparent and set the app window background to white
-                        UIApplication.shared.delegate?.window?!.backgroundColor = UIColor.white
-                        self.capWebView?.isOpaque = false
-                        self.capWebView?.backgroundColor = UIColor.clear
+                        /*
+                         UIApplication.shared.delegate?.window?!.backgroundColor = UIColor.white
+                         */
+                        self.hideBackground()
 
                         let deviceDescoverySession = AVCaptureDevice.DiscoverySession.init(
                             deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera],
@@ -198,6 +224,8 @@ public class CAPVideoRecorderPlugin: CAPPlugin, AVCaptureFileOutputRecordingDele
 	*/
     @objc func destroy(_ call: CAPPluginCall) {
         DispatchQueue.main.async {
+            self.showBackground()
+
             let appDelegate = UIApplication.shared.delegate
             appDelegate?.window?!.backgroundColor = UIColor.black
 

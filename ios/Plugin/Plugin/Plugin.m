@@ -15,4 +15,6 @@ CAP_PLUGIN(CAPVideoRecorderPlugin, "VideoRecorder",
 	CAP_PLUGIN_METHOD(startRecording, CAPPluginReturnPromise);
 	CAP_PLUGIN_METHOD(stopRecording, CAPPluginReturnPromise);
 	CAP_PLUGIN_METHOD(getDuration, CAPPluginReturnPromise);
+    CAP_PLUGIN_METHOD(hideBackground, CAPPluginReturnPromise);
+    CAP_PLUGIN_METHOD(showBackground, CAPPluginReturnPromise);
 )
