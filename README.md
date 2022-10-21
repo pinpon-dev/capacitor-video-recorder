@@ -3,7 +3,7 @@
 A video recording plugin for Capacitor that allows applications to use the native camera and microphone and display the recording interface either below or above their application.
 
 #### Installation
-`npm install @teamhive/capacitor-video-recorder`
+`npm install @pinpon/capacitor-video-recorder`
 
 #### Platform Support
 - iOS
@@ -16,7 +16,7 @@ A video recording plugin for Capacitor that allows applications to use the nativ
 feature.module.ts
 > Import the plugin as defined below to allow the plugin to register correctly to the feature module.
 ```typescript
-import '@teamhive/capacitor-video-recorder';
+import '@pinpon/capacitor-video-recorder';
 ```
 
 ### Initializing Camera
@@ -26,7 +26,7 @@ In order to initialize the camera feed (**note**: you are not recording at this 
 > Note: To overlay your web UI on-top of the camera output, you must use stackPosition: back and make all layers of your app transparent so that the camera can be seen under the webview.
 
 ```typescript
-import { VideoRecorderCamera, VideoRecorderPreviewFrame } from '@teamhive/capacitor-video-recorder';
+import { VideoRecorderCamera, VideoRecorderPreviewFrame } from '@pinpon/capacitor-video-recorder';
 
 const { VideoRecorder } = Plugins;
 
