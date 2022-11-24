@@ -1,6 +1,6 @@
 {
     "name": "pinpon-capacitor-video-recorder",
-    "version": "5.0.7",
+    "version": "5.0.18",
     "description": "Records video",
     "main": "dist/plugin.cjs.js",
     "module": "dist/esm/index.js",

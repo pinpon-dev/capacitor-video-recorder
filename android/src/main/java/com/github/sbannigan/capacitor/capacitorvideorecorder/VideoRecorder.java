@@ -4,6 +4,7 @@ package com.github.sbannigan.capacitor.capacitorvideorecorder;
 import android.graphics.Color;
 import android.net.Uri;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -23,11 +24,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import co.fitcom.fancycamera.CameraEventListenerUI;
-import co.fitcom.fancycamera.EventType;
-import co.fitcom.fancycamera.FancyCamera;
-import co.fitcom.fancycamera.PhotoEvent;
-import co.fitcom.fancycamera.VideoEvent;
+import fancycamera.CameraEventListenerUI;
+import fancycamera.EventType;
+import fancycamera.FancyCamera;
+import fancycamera.PhotoEvent;
+import fancycamera.VideoEvent;
 
 @NativePlugin(
         requestCodes = {
@@ -157,7 +158,7 @@ public class VideoRecorder extends Plugin {
                         object.put("videoUrl", path);
                         getCall().resolve(object);
                     } else {
-                        if (event.getType() == co.fitcom.fancycamera.EventType.ERROR) {
+                        if (event.getType() == EventType.ERROR) {
                             getCall().reject(event.getMessage());
                         }
                     }
@@ -222,6 +223,11 @@ public class VideoRecorder extends Plugin {
     }
 
     @PluginMethod()
+    public void requestPermission() {
+        fancyCamera.requestPermission();
+    }
+
+    @PluginMethod()
     public void destroy(PluginCall call) {
         makeOpaque();
         getActivity().runOnUiThread(new Runnable() {
@@ -235,7 +241,7 @@ public class VideoRecorder extends Plugin {
     }
 
     private void makeOpaque() {
-        this.bridge.getWebView().setBackgroundColor(Color.WHITE);
+        this.bridge.getWebView().setBackgroundColor(Color.rgb(27, 36, 54));
     }
 
     @PluginMethod()
@@ -378,7 +384,10 @@ public class VideoRecorder extends Plugin {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int deviceHeight = displayMetrics.heightPixels;
+        Log.d("33T", String.valueOf(deviceHeight));
         int deviceWidth = displayMetrics.widthPixels;
+        Log.d("33T", String.valueOf(deviceWidth));
+
         int width;
         int height;
         if (fancyCamera.getLayoutParams() == null) {
@@ -393,11 +402,17 @@ public class VideoRecorder extends Plugin {
             width = getPixels(frameConfig.width);
         }
 
+        Log.d("33T", String.valueOf(width));
+
+
         if (frameConfig.height == -1) {
             height = deviceHeight;
         } else {
             height = getPixels(frameConfig.height);
         }
+
+        Log.d("33T", String.valueOf(height));
+
 
         oldParams.width = width;
         oldParams.height = height;
@@ -452,6 +467,11 @@ public class VideoRecorder extends Plugin {
             width = object.getInteger("width", -1);
             height = object.getInteger("height", -1);
             borderRadius = object.getInteger("borderRadius", 0);
+
+            Log.d("33T", String.valueOf("FrameConfig"));
+            Log.d("33T", String.valueOf(width));
+            Log.d("33T", String.valueOf(height));
+
             JSObject ds = object.getJSObject("dropShadow");
             dropShadow = new DropShadow(ds != null ? ds : new JSObject());
         }

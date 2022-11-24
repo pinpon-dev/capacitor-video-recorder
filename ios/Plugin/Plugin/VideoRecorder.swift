@@ -52,6 +52,12 @@ public class CAPVideoRecorderPlugin: CAPPlugin, AVCaptureFileOutputRecordingDele
         self.notifyListeners("onVolumeInput", data: ["value":averagePower])
     }
     
+           
+    private func requestPermission() {
+              DispatchQueue.main.async {}
+       }
+
+    
     private func hideBackground() {
            DispatchQueue.main.async {
                self.bridge?.webView!.isOpaque = false

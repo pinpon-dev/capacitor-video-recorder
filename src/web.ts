@@ -187,6 +187,9 @@ export class VideoRecorderWeb extends WebPlugin implements VideoRecorderPlugin {
 	}
     async hideBackground(): Promise<void> {
        
+    }    
+    async requestPermission(): Promise<void> {
+       
     }
         
 	addListener(): any {
