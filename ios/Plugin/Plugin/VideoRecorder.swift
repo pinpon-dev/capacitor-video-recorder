@@ -148,16 +148,33 @@ public class CAPVideoRecorderPlugin: CAPPlugin, AVCaptureFileOutputRecordingDele
                         self.videoOutput = AVCaptureMovieFileOutput()
                         self.videoOutput?.movieFragmentInterval = CMTime.invalid
                         self.captureSession!.addOutput(self.videoOutput!)
-
+                        
+                        let cameraMaxWidth = self.cameraInput?.device.activeFormat.formatDescription.dimensions.width ?? 0
+                        
                         // Set Video quality
                         switch(self.quality){
                         case 1:
+                            // handle camera preset not supported
+                            if (cameraMaxWidth != 0 && cameraMaxWidth < 1280) {
+                                call.reject("Quality not supported")
+                                return
+                            }
                             self.captureSession?.sessionPreset = AVCaptureSession.Preset.hd1280x720
                             break;
                         case 2:
+                            // handle camera preset not supported
+                            if (cameraMaxWidth != 0 && cameraMaxWidth < 1920) {
+                                call.reject("Quality not supported")
+                                return
+                            }
                             self.captureSession?.sessionPreset = AVCaptureSession.Preset.hd1920x1080
                             break;
                         case 3:
+                            // handle camera preset not supported
+                            if (cameraMaxWidth != 0 && cameraMaxWidth < 3840) {
+                                call.reject("Quality not supported")
+                                return
+                            }
                             self.captureSession?.sessionPreset = AVCaptureSession.Preset.hd4K3840x2160
                             break;
                         case 4:
