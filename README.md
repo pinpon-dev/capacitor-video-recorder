@@ -5,6 +5,10 @@ A video recording plugin for Capacitor that allows applications to use the nativ
 #### Installation
 `npm install @pinpon/capacitor-video-recorder`
 
+
+#### Publish new version
+`yarn publish`
+
 #### Platform Support
 - iOS
 - Android
@@ -76,3 +80,4 @@ VideoRecorder.destroy();
 |iOS|Android|
 |---|---|
 |<img src="https://user-images.githubusercontent.com/13732623/70366156-52e83500-1863-11ea-96f0-c53bdd12ebea.gif" />|<img src="https://user-images.githubusercontent.com/13732623/70366162-61365100-1863-11ea-8376-fe76cf147a73.gif" />|
+
